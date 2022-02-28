@@ -1,7 +1,7 @@
 function [row] = getAuxillaryPoly(values,inputLength,columnLength,i)
 % Written By: RoundStarling20
 %    Created: Febuary 27 2022
-%   Modified: Febuary 27 2022
+%   Modified: Febuary 28 2022
 %
 %
 %  Function Description:  
@@ -22,7 +22,10 @@ function [row] = getAuxillaryPoly(values,inputLength,columnLength,i)
 syms s
 symbolic = sym(zeros(1,columnLength));
 power = inputLength - i + 1;
-symbolic(1:power) = s.^(power:-2:0);
+sThings = s.^(power:-2:0);
+symbolic(1:length(sThings)) = sThings(1,:);
 auxilaryPolynomial = symbolic.* values(i-1,:);
+fprintf('Auxlilary polynomial in row %d: ',i);
+disp(auxilaryPolynomial)
 row = subs(diff(auxilaryPolynomial,s),1);
 end
