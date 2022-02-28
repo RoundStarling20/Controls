@@ -1,7 +1,7 @@
 function values = routhHurwitz(coefficients)
 % Written By: RoundStarling20
 %    Created: Febuary 18 2022
-%   Modified: Febuary 26 2022
+%   Modified: Febuary 28 2022
 %
 %
 %  Function Description:  
@@ -32,7 +32,6 @@ values(2,1:floor(halfInputLength)) = coefficients(2:2:end);
 %% Checks if second row is all zeros or first col is
 if (values(2,:) == 0)
         values(2,:) = getAuxillaryPoly(values,inputLength,columnLength,2);
-        fprintf('Second row needed an auxilary polynomial');
 elseif(values(2,1) == 0 && sum(double(values(2,:)) ~= 0) > 1)
     values(2,1) = e;
 end
@@ -45,13 +44,12 @@ for i = 3:inputLength
         %checks if the other values of the row are zero, if not put e in
         %first column (row must be completed before the epsilon is added
         %initizized as a zeros array
-        if((values(i,1) == 0) && (sum(double(values(i,:)) ~= 0) > 1) && (j == columnLength - 1))
+        if((j == columnLength-1)&& (values(i,1) == 0) && (sum(double(values(i,:)) ~= 0) > 0))
             values(i,1) = e;
         end
     end
     if (values(i,:) == 0)
         values(i,:) = getAuxillaryPoly(values,inputLength,columnLength,i);
-        fprintf('Used an auxilary polynomial\n');
     end
 end
 %% Take limit
@@ -60,7 +58,6 @@ values = limit(values,e,0,'left');
 for i = 3:inputLength
     if (values(i,:) == 0)
         values(i,:) = getAuxillaryPoly(values,inputLength,columnLength,i);
-        fprintf('Row of zeros appeared after limit, made an aux polynomial\n');
     end
 end
 end
