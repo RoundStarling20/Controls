@@ -18,7 +18,7 @@ function values = routhHurwitz(coefficients)
 %
 
 %% Constants
-syms e s
+syms e
 inputLength = length(coefficients);
 halfInputLength = inputLength/2;
 arbMatrix = sym(zeros(2));
@@ -31,11 +31,7 @@ values(1,:) = coefficients(1:2:end);
 values(2,1:floor(halfInputLength)) = coefficients(2:2:end);
 %% Checks if second row is all zeros or first col is
 if (values(2,:) == 0)
-        symbolic = sym(zeros(1,columnLength));
-        power = inputLength - 2 + 1;
-        symbolic(1:power) = s.^(power:-2:0);
-        auxilaryPolynomial = symbolic.* values(2-1,:);
-        values(2,:) = subs(diff(auxilaryPolynomial,s),1);
+        values(2,:) = getAuxillaryPoly(values,inputLength,columnLength,2);
         fprintf('Second row needed an auxilary polynomial');
 elseif(values(2,1) == 0 && sum(double(values(2,:)) ~= 0) > 1)
     values(2,1) = e;
@@ -43,10 +39,6 @@ end
 %% compute table
 for i = 3:inputLength
     for j = 1:columnLength - 1
-        %arbMatrix(1,1) = values(i-2,1);
-        %arbMatrix(1,2) = values(i-2,j+1);
-        %arbMatrix(2,1) = values(i-1,1);
-        %arbMatrix(2,2) = values(i-1,j+1);
         arbMatrix(1:2,1:2) = values(i-2:i-1,[1,j+1]);
         values(i,j) = -1/(values(i-1,1)) * det(arbMatrix);
         
@@ -58,11 +50,7 @@ for i = 3:inputLength
         end
     end
     if (values(i,:) == 0)
-        symbolic = sym(zeros(1,columnLength));
-        power = inputLength - i + 1;
-        symbolic(1:power) = s.^(power:-2:0);
-        auxilaryPolynomial = symbolic.* values(i-1,:);
-        values(i,:) = subs(diff(auxilaryPolynomial,s),1);
+        values(i,:) = getAuxillaryPoly(values,inputLength,columnLength,i);
         fprintf('Used an auxilary polynomial\n');
     end
 end
@@ -71,11 +59,7 @@ values = limit(values,e,0,'left');
 %% Check if new row of zeros appears
 for i = 3:inputLength
     if (values(i,:) == 0)
-        symbolic = sym(zeros(1,collumnLength));
-        power = inputLength - i + 1;
-        symbolic(1:power) = s.^(power:-2:0);
-        auxilaryPolynomial = symbolic.* values(i-1,:);
-        values(i,:) = subs(diff(auxilaryPolynomial,s),1);
+        values(i,:) = getAuxillaryPoly(values,inputLength,columnLength,i);
         fprintf('Row of zeros appeared after limit, made an aux polynomial\n');
     end
 end
