@@ -1,7 +1,7 @@
 function values = routhHurwitz(coefficients)
 % Written By: RoundStarling20
 %    Created: Febuary 18 2022
-%   Modified: Febuary 28 2022
+%   Modified: March 01 2022
 %
 %
 %  Function Description:  
@@ -40,15 +40,13 @@ for i = 3:inputLength
     for j = 1:columnLength - 1
         arbMatrix(1:2,1:2) = values(i-2:i-1,[1,j+1]);
         values(i,j) = -1/(values(i-1,1)) * det(arbMatrix);
-        
-        %checks if the other values of the row are zero, if not put e in
-        %first column (row must be completed before the epsilon is added
-        %initizized as a zeros array
-        if((j == columnLength-1)&& (values(i,1) == 0) && (sum(double(values(i,:)) ~= 0) > 0))
-            values(i,1) = e;
-        end
     end
-    if (values(i,:) == 0)
+    %checks if the other values of the row are zero, if not put e in
+    %first column (row must be completed before the epsilon is added
+    %initizized as a zeros array
+    if((values(i,1) == 0) && (sum(double(values(i,:)) ~= 0) > 0))
+            values(i,1) = e;
+    elseif (values(i,:) == 0)
         values(i,:) = getAuxillaryPoly(values,inputLength,columnLength,i);
     end
 end
