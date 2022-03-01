@@ -20,15 +20,13 @@ function [row] = getAuxillaryPoly(values,inputLength,columnLength,i)
 %
 
 syms s
-sThings = sym(zeros(1,columnLength));
 power = inputLength - i + 1;
-for j = 1:columnLength
-    sThings(j) = s.^(power);
-    if power <= 0
-        break;
-    else
-        power = power - 2;
-    end
+sThings = s.^(power:-2:0);
+
+if length(sThings) > columnLength
+    sThings(columnLength:end) = [];
+else
+    sThings(end:columnLength) = 0;
 end
 auxilaryPolynomial = sThings.* values(i-1,:);
 fprintf('Auxlilary polynomial in row %d: ',i-1);
