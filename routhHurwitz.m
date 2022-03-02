@@ -64,7 +64,7 @@ for i = 3:inputLength
     %checks if the only the first column is zero 
     if((values(i-1,1) == 0) && (sum(double(values(i-1,:)) ~= 0) > 0))
             values(i-1,1) = e;
-    %checks for row of zeros on even index
+    %checks for row of zeros
     elseif (values(i-1,:) == 0)
         values(i-1,:) = getAuxiliaryPoly(values,inputLength,columnLength,i-1);
     end
