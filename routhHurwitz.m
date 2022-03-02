@@ -51,6 +51,7 @@ inputLength = length(coefficients);
 halfInputLength = inputLength/2;
 columnLength = ceil(halfInputLength);
 values = sym(zeros(inputLength,columnLength));
+arbMatrix = sym(zeros(2));
 
 %% Populate Matrix
 %fill in first row with odd coefficients
@@ -68,9 +69,8 @@ end
 %% compute table
 for i = 3:inputLength
     for j = 1:columnLength - 1
-        values(i,j) = -1/(values(i-1,1)) *  ... 
-            det([values(i-2,1),values(i-2,j+1); ...
-                 values(i-1,1),values(i-1,j+1)]);
+        arbMatrix(1:2,1:2) = values(i-2:i-1,[1,j+1]);
+        values(i,j) = -1/(values(i-1,1)) * det(arbMatrix);
     end
     %checks if the other values of the row are zero, if not put e in
     %first column (row must be completed before the epsilon is added
