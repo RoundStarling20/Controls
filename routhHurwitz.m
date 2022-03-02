@@ -39,12 +39,16 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 % 
 %      2
 
+%% Initial Input Check
+if nargin < 1 || size(coefficients,1) > 1
+    error(['Input an 1-D array of polynomial coefficients entering '...
+        'zeros where necessary.']);
+end
 
 %% Constants
 syms e
 inputLength = length(coefficients);
 halfInputLength = inputLength/2;
-arbMatrix = sym(zeros(2));
 columnLength = ceil(halfInputLength);
 values = sym(zeros(inputLength,columnLength));
 
@@ -52,7 +56,7 @@ values = sym(zeros(inputLength,columnLength));
 %fill in first row with odd coefficients
 values(1,:) = coefficients(1:2:end);
 %fill in second row with even coefficients
-values(2,1:floor(halfInputLength)) = coefficients(2:2:end);
+values(2,1:(inputLength - columnLength)) = coefficients(2:2:end);
 
 %% Checks if second row is all zeros or first col is
 if (values(2,:) == 0)
@@ -64,8 +68,9 @@ end
 %% compute table
 for i = 3:inputLength
     for j = 1:columnLength - 1
-        arbMatrix(1:2,1:2) = values(i-2:i-1,[1,j+1]);
-        values(i,j) = -1/(values(i-1,1)) * det(arbMatrix);
+        values(i,j) = -1/(values(i-1,1)) *  ... 
+            det([values(i-2,1),values(i-2,j+1); ...
+                 values(i-1,1),values(i-1,j+1)]);
     end
     %checks if the other values of the row are zero, if not put e in
     %first column (row must be completed before the epsilon is added
@@ -92,7 +97,8 @@ if nargout == 2
     numberOfRHPPoles = [];
     if isSymType(sym(coefficients),'number') == 1
         signOfFirstColumn = sign(double(values(:,1)'));
-        if((sum((signOfFirstColumn == -1)) == inputLength) || (sum((signOfFirstColumn == 1)) == inputLength))
+        if((sum((signOfFirstColumn == -1)) == inputLength) || ...
+                 (sum((signOfFirstColumn == 1)) == inputLength))
             numberOfRHPPoles = 0;
         else
             columnToBeEvaluated = double(values(:,1)');
@@ -101,7 +107,8 @@ if nargout == 2
             numberOfRHPPoles = sum(xor(pos(1:end-1),pos(2:end)));
         end
     else
-        warning('The system''s stability can''t be evaluated with symbolic variables.');
+        warning(['The system''s stability can''t ' ...
+            'be evaluated with symbolic variables.']);
     end
 end
 end
