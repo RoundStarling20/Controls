@@ -15,7 +15,7 @@ function [row] = getAuxiliaryPoly(values,inputLength,columnLength,i)
 %             i:    row of zeros index
 %
 % OUTPUTS:
-%  row:    Auxiliary polynomial derivative coefficient
+%  row:    Auxiliary polynomial derivative coefficients
 %
 %
 
