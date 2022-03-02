@@ -1,6 +1,6 @@
 function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 % Written By: RoundStarling20
-%    Created: Febuary 18 2022
+%    Created: February 18 2022
 %   Modified: March 01 2022
 %
 %
@@ -19,7 +19,7 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 %
 % Example Code:
 % [values,numberOfRHPPoles] = routhHurwitz([1, 5, 12, 25, 45, 50, 82, 60, 84])
-% Auxlilary polynomial in row 3: 7*s^6 + 35*s^4 + 70*s^2
+% Auxiliary polynomial in row 3: 7*s^6 + 35*s^4 + 70*s^2
 %  
 %  
 % values =
@@ -69,11 +69,11 @@ for i = 3:inputLength
     end
     %checks if the other values of the row are zero, if not put e in
     %first column (row must be completed before the epsilon is added
-    %initizized as a zeros array
+    %initialized as a zeros array
     if((values(i,1) == 0) && (sum(double(values(i,:)) ~= 0) > 0))
             values(i,1) = e;
     elseif (values(i,:) == 0)
-        values(i,:) = getAuxillaryPoly(values,inputLength,columnLength,i);
+        values(i,:) = getAuxiliaryPoly(values,inputLength,columnLength,i);
     end
 end
 
@@ -101,7 +101,7 @@ if nargout == 2
             numberOfRHPPoles = sum(xor(pos(1:end-1),pos(2:end)));
         end
     else
-        warning('The systems stability cant be evaluated with symbolic variables');
+        warning('The system''s stability can''t be evaluated with symbolic variables.');
     end
 end
 end
