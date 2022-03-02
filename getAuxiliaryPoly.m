@@ -27,7 +27,7 @@ if length(sThings) > columnLength
 else
     sThings(end+1:columnLength) = 0;
 end
-auxiliaryPolynomial = sThings.* values(i-1,:);
+auxiliaryPolynomial = sThings.* values(1,:);
 fprintf('Auxiliary polynomial in row %d: ',i-1);
 disp(sum(auxiliaryPolynomial))
 row = subs(diff(auxiliaryPolynomial,s),1);
