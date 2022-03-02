@@ -64,10 +64,11 @@ for i = 3:inputLength
     %checks if the only the first column is zero 
     if((values(i-1,1) == 0) && (sum(double(values(i-1,:)) ~= 0) > 0))
             values(i-1,1) = e;
-    %checks for row of zeros
+    %checks for row of zeros on even index
     elseif ((mod(i-1,2) == 0) && (all((values(i-1,:)) == 0)))
         values(i-1,:) = getAuxiliaryPoly(values,inputLength,columnLength,i-1);
     end
+    %compute index
     for j = 1:columnLength - 1
         arbMatrix(1:2,1:2) = values(i-2:i-1,[1,j+1]);
         values(i,j) = -1/(values(i-1,1)) * det(arbMatrix);
