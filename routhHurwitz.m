@@ -1,4 +1,4 @@
-function values = routhHurwitz(coefficients)
+function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 % Written By: RoundStarling20
 %    Created: Febuary 18 2022
 %   Modified: March 01 2022
@@ -12,8 +12,9 @@ function values = routhHurwitz(coefficients)
 %  coefficients:    Coefficients of a function
 %
 % OUTPUTS:
-%  values:    A symbolic matrix with the tables values, limit is taken from
-%           the left
+%             values:          A symbolic matrix with the tables values,
+%                              limit is taken from the left
+%  numberOfRHPPoles:           The number of poles in the right half plane.
 %
 %
 
@@ -24,17 +25,20 @@ halfInputLength = inputLength/2;
 arbMatrix = sym(zeros(2));
 columnLength = ceil(halfInputLength);
 values = sym(zeros(inputLength,columnLength));
+
 %% Populate Matrix
 %fill in first row with odd coefficients
 values(1,:) = coefficients(1:2:end);
 %fill in second row with even coefficients
 values(2,1:floor(halfInputLength)) = coefficients(2:2:end);
+
 %% Checks if second row is all zeros or first col is
 if (values(2,:) == 0)
         values(2,:) = getAuxillaryPoly(values,inputLength,columnLength,2);
 elseif(values(2,1) == 0 && sum(double(values(2,:)) ~= 0) > 1)
     values(2,1) = e;
 end
+
 %% compute table
 for i = 3:inputLength
     for j = 1:columnLength - 1
@@ -50,12 +54,34 @@ for i = 3:inputLength
         values(i,:) = getAuxillaryPoly(values,inputLength,columnLength,i);
     end
 end
+
 %% Take limit
 values = limit(values,e,0,'left');
+
 %% Check if new row of zeros appears
 for i = 3:inputLength
     if (values(i,:) == 0)
         values(i,:) = getAuxillaryPoly(values,inputLength,columnLength,i);
+    end
+end
+
+%% Determine if the system is stable
+if nargout == 2
+    numberOfRHPPoles = [];
+    coefficients = sym(coefficients);
+    if isSymType(coefficients,'number') == 1
+        signOfFirstColumn = sign(double(values(:,1)'));
+        if((sum((signOfFirstColumn == -1)) == inputLength) || (sum((signOfFirstColumn == 1)) == inputLength))
+            numberOfRHPPoles = 0;
+
+        else
+            columnToBeEvaluated = double(values(:,1)');
+            columnToBeEvaluated(columnToBeEvaluated == 0) = -1;
+            pos = columnToBeEvaluated > 0; 
+            numberOfRHPPoles = sum(xor(pos(1:end-1),pos(2:end)));
+        end
+    else
+        warning('The systems stability cant be evaluated with symbolic variables');
     end
 end
 end
