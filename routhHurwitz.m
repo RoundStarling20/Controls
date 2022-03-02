@@ -94,7 +94,7 @@ if nargout == 2
                  (sum((signOfFirstColumn == 1)) == inputLength))
             numberOfRHPPoles = 0;
         else
-            columnToBeEvaluated = double(values(:,1)');
+            columnToBeEvaluated = double(values(:,1));
             columnToBeEvaluated(columnToBeEvaluated == 0) = -1;
             pos = columnToBeEvaluated > 0; 
             numberOfRHPPoles = sum(xor(pos(1:end-1),pos(2:end)));
