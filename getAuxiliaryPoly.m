@@ -1,21 +1,21 @@
-function [row] = getAuxillaryPoly(values,inputLength,columnLength,i)
+function [row] = getAuxiliaryPoly(values,inputLength,columnLength,i)
 % Written By: RoundStarling20
-%    Created: Febuary 27 2022
+%    Created: February 27 2022
 %   Modified: March 01 2022
 %
 %
 %  Function Description:  
-%      The purpose of this program is to create an auxilary polynomial for
+%      The purpose of this program is to create an auxiliary polynomial for
 %      the routhHurwitz function 
 %
 % INPUTS:
 %        values:    table that has been computed by routhHurwitz
-%   inputLength:    number of coefficents
+%   inputLength:    number of coefficients
 %  columnLength:    number of columns
 %             i:    row of zeros index
 %
 % OUTPUTS:
-%  row:    auxilary polynomial derivative coefficient
+%  row:    Auxiliary polynomial derivative coefficient
 %
 %
 
@@ -27,8 +27,8 @@ if length(sThings) > columnLength
 else
     sThings(end+1:columnLength) = 0;
 end
-auxilaryPolynomial = sThings.* values(i-1,:);
-fprintf('Auxlilary polynomial in row %d: ',i-1);
-disp(sum(auxilaryPolynomial))
-row = subs(diff(auxilaryPolynomial,s),1);
+auxiliaryPolynomial = sThings.* values(i-1,:);
+fprintf('Auxiliary polynomial in row %d: ',i-1);
+disp(sum(auxiliaryPolynomial))
+row = subs(diff(auxiliaryPolynomial,s),1);
 end
