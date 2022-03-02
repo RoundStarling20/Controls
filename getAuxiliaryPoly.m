@@ -23,7 +23,7 @@ syms s
 power = inputLength - i + 1;
 sThings = s.^(power:-2:0);
 if length(sThings) > columnLength
-    sThings(columnLength:end) = [];
+    sThings(columnLength+1:end) = [];
 else
     sThings(end+1:columnLength) = 0;
 end
