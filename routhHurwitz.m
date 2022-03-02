@@ -83,7 +83,7 @@ values = limit(values,e,0,'left');
 %% Check if new row of zeros appears
 for i = 3:inputLength
     if (values(i,:) == 0)
-        values(i,:) = getAuxillaryPoly(values,inputLength,columnLength,i);
+        values(i,:) = getAuxiliaryPoly(values,inputLength,columnLength,i);
     end
 end
 
