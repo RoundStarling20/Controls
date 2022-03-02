@@ -22,11 +22,10 @@ function [row] = getAuxillaryPoly(values,inputLength,columnLength,i)
 syms s
 power = inputLength - i + 1;
 sThings = s.^(power:-2:0);
-
 if length(sThings) > columnLength
     sThings(columnLength:end) = [];
 else
-    sThings(end:columnLength) = 0;
+    sThings(end+1:columnLength) = 0;
 end
 auxilaryPolynomial = sThings.* values(i-1,:);
 fprintf('Auxlilary polynomial in row %d: ',i-1);
