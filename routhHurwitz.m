@@ -17,6 +17,28 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 %  numberOfRHPPoles:           The number of poles in the right half plane.
 %
 %
+% Example Code:
+% [values,numberOfRHPPoles] = routhHurwitz([1, 5, 12, 25, 45, 50, 82, 60, 84])
+% Auxlilary polynomial in row 3: 7*s^6 + 35*s^4 + 70*s^2
+%  
+%  
+% values =
+%  
+% [      1,     12,  45, 82, 84]
+% [      5,     25,  50, 60,  0]
+% [      7,     35,  70, 84,  0]
+% [     42,    140, 140,  0,  0]
+% [   35/3,  140/3,  84,  0,  0]
+% [    -28, -812/5,   0,  0,  0]
+% [    -21,     84,   0,  0,  0]
+% [-1372/5,      0,   0,  0,  0]
+% [     84,      0,   0,  0,  0]
+%  
+% 
+% numberOfRHPPoles =
+% 
+%      2
+
 
 %% Constants
 syms e
@@ -68,12 +90,10 @@ end
 %% Determine if the system is stable
 if nargout == 2
     numberOfRHPPoles = [];
-    coefficients = sym(coefficients);
-    if isSymType(coefficients,'number') == 1
+    if isSymType(sym(coefficients),'number') == 1
         signOfFirstColumn = sign(double(values(:,1)'));
         if((sum((signOfFirstColumn == -1)) == inputLength) || (sum((signOfFirstColumn == 1)) == inputLength))
             numberOfRHPPoles = 0;
-
         else
             columnToBeEvaluated = double(values(:,1)');
             columnToBeEvaluated(columnToBeEvaluated == 0) = -1;
