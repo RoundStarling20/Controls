@@ -40,7 +40,6 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 %      2
 
 %% Initial Input Check
-tic
 if nargin < 1 || size(coefficients,1) > 1
     error(['Input an 1-D array of polynomial coefficients entering '...
         'zeros where necessary.']);
@@ -66,7 +65,7 @@ for i = 3:inputLength
     if((values(i-1,1) == 0) && (sum(double(values(i-1,:)) ~= 0) > 0))
             values(i-1,1) = e;
     %checks for row of zeros
-    elseif (values(i-1,:) == 0) 
+    elseif ((mod(i-1,2) == 0) && (all((values(i-1,:)) == 0)))
         values(i-1,:) = getAuxiliaryPoly(values,inputLength,columnLength,i-1);
     end
     for j = 1:columnLength - 1
@@ -104,5 +103,4 @@ if nargout == 2
             'be evaluated with symbolic variables.']);
     end
 end
-toc
 end
