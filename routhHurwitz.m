@@ -1,7 +1,7 @@
 function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 % Written By: RoundStarling20
 %    Created: February 18 2022
-%   Modified: March 01 2022
+%   Modified: March 02 2022
 %
 %
 %  Function Description:  
@@ -40,6 +40,7 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 %      2
 
 %% Initial Input Check
+tic
 if nargin < 1 || size(coefficients,1) > 1
     error(['Input an 1-D array of polynomial coefficients entering '...
         'zeros where necessary.']);
@@ -59,26 +60,18 @@ values(1,:) = coefficients(1:2:end);
 %fill in second row with even coefficients
 values(2,1:(inputLength - columnLength)) = coefficients(2:2:end);
 
-%% Checks if second row is all zeros or first col is
-if (values(2,:) == 0)
-        values(2,:) = getAuxillaryPoly(values,inputLength,columnLength,2);
-elseif(values(2,1) == 0 && sum(double(values(2,:)) ~= 0) > 1)
-    values(2,1) = e;
-end
-
 %% compute table
 for i = 3:inputLength
+    %checks if the only the first column is zero 
+    if((values(i-1,1) == 0) && (sum(double(values(i-1,:)) ~= 0) > 0))
+            values(i-1,1) = e;
+    %checks for row of zeros
+    elseif (values(i-1,:) == 0) 
+        values(i-1,:) = getAuxiliaryPoly(values,inputLength,columnLength,i-1);
+    end
     for j = 1:columnLength - 1
         arbMatrix(1:2,1:2) = values(i-2:i-1,[1,j+1]);
         values(i,j) = -1/(values(i-1,1)) * det(arbMatrix);
-    end
-    %checks if the other values of the row are zero, if not put e in
-    %first column (row must be completed before the epsilon is added
-    %initialized as a zeros array
-    if((values(i,1) == 0) && (sum(double(values(i,:)) ~= 0) > 0))
-            values(i,1) = e;
-    elseif (values(i,:) == 0)
-        values(i,:) = getAuxiliaryPoly(values,inputLength,columnLength,i);
     end
 end
 
@@ -111,4 +104,5 @@ if nargout == 2
             'be evaluated with symbolic variables.']);
     end
 end
+toc
 end
