@@ -19,8 +19,6 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 %
 % Example Code:
 % [values,numberOfRHPPoles] = routhHurwitz([1, 5, 12, 25, 45, 50, 82, 60, 84])
-% Auxiliary polynomial in row 3: 7*s^6 + 35*s^4 + 70*s^2
-%  
 %  
 % values =
 %  
