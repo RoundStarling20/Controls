@@ -19,16 +19,12 @@ function [row] = getAuxiliaryPoly(values,inputLength,columnLength,i)
 %
 %
 
-syms s
 power = inputLength - i + 1;
-sThings = s.^(power:-2:0);
-if length(sThings) > columnLength
-    sThings(columnLength+1:end) = [];
+exponents = power:-2:0;
+if length(exponents) > columnLength
+    exponents(columnLength+1:end) = [];
 else
-    sThings(end+1:columnLength) = 0;
+    exponents(end+1:columnLength) = 0;
 end
-auxiliaryPolynomial = sThings.* values(1,:);
-fprintf('Auxiliary polynomial in row %d: ',i-1);
-disp(sum(auxiliaryPolynomial))
-row = subs(diff(auxiliaryPolynomial,s),1);
+row = exponents.* values(1,:);
 end
