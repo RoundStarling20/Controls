@@ -1,7 +1,7 @@
 function [row] = getAuxiliaryPoly(values,inputLength,columnLength,i)
 % Written By: RoundStarling20
 %    Created: February 27 2022
-%   Modified: March 01 2022
+%   Modified: March 03 2022
 %
 %
 %  Function Description:  
@@ -26,5 +26,5 @@ if length(exponents) > columnLength
 else
     exponents(end+1:columnLength) = 0;
 end
-row = exponents.* values(1,:);
+row = exponents.* values;
 end
