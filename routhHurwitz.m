@@ -1,7 +1,7 @@
 function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 % Written By: RoundStarling20
 %    Created: February 18 2022
-%   Modified: March 02 2022
+%   Modified: March 03 2022
 %
 %
 %  Function Description:  
@@ -64,7 +64,7 @@ for i = 3:inputLength
             values(i-1,1) = e;
     %checks for row of zeros
     elseif (values(i-1,:) == 0)
-        values(i-1,:) = getAuxiliaryPoly(values(i-2:i-1,:),inputLength,columnLength,i-1);
+        values(i-1,:) = getAuxiliaryPoly(values(i-2,:),inputLength,columnLength,i-1);
     end
     %compute index
     for j = 1:columnLength - 1
@@ -79,7 +79,7 @@ values = limit(values,e,0,'left');
 %% Check if new row of zeros appears
 for i = 3:inputLength
     if (values(i,:) == 0)
-        values(i,:) = getAuxiliaryPoly(values(i-1:i,:),inputLength,columnLength,i);
+        values(i,:) = getAuxiliaryPoly(values(i-1,:),inputLength,columnLength,i);
     end
 end
 
