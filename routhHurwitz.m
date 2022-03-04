@@ -9,7 +9,7 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 %          and inform the user of system stability.
 %
 % INPUTS:
-%  coefficients:    Coefficients of a function
+%  coefficients:    Coefficients of a function (symbolic or numeric)
 %
 % OUTPUTS:
 %             values:          A symbolic matrix with the tables values,
