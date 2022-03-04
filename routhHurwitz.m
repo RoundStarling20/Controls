@@ -65,7 +65,8 @@ for i = 3:inputLength
                 values(i-1,1) = e;
         %checks for row of zeros
         else
-            values(i-1,:) = getAuxiliaryPoly(values(i-2,:),inputLength,columnLength,i-1);
+            values(i-1,:) = getAuxiliaryPoly(values(i-2,:), ... 
+                inputLength,columnLength,i-1);
         end
     end
     %compute index
