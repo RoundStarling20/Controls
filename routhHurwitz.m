@@ -90,7 +90,7 @@ end
 if nargout == 2
     numberOfRHPPoles = [];
     if isSymType(sym(coefficients),'number') == 1
-        signOfFirstColumn = sign(double(values(:,1)));
+        signOfFirstColumn = sign(values(:,1));
         if(sum((abs(signOfFirstColumn) == 1)) == inputLength)
             numberOfRHPPoles = 0;
         else
