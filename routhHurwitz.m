@@ -59,12 +59,14 @@ values(2,1:(inputLength - columnLength)) = coefficients(2:2:end);
 
 %% compute table
 for i = 3:inputLength
-    %checks if the only the first column is zero 
-    if((values(i-1,1) == 0) && (sum(double(values(i-1,:)) ~= 0) > 0))
-            values(i-1,1) = e;
-    %checks for row of zeros
-    elseif (values(i-1,:) == 0)
-        values(i-1,:) = getAuxiliaryPoly(values(i-2,:),inputLength,columnLength,i-1);
+    if(values(i-1,1) == 0)
+        %checks if the only the first column is zero 
+        if(sum(double(values(i-1,2:end)) ~= 0) > 0)
+                values(i-1,1) = e;
+        %checks for row of zeros
+        else
+            values(i-1,:) = getAuxiliaryPoly(values(i-2,:),inputLength,columnLength,i-1);
+        end
     end
     %compute index
     for j = 1:columnLength - 1
