@@ -64,7 +64,7 @@ for i = 3:inputLength
         if (values(i-1,2:end) == 0)
             values(i-1,:) = getAuxiliaryPoly(values(i-2,:), ... 
                 inputLength,columnLength,i-1);           
-        %if not row of zeros, then first column must be a zero
+        %if not row of zeros, then case 1 has occured
         else
             values(i-1,1) = e;
         end
