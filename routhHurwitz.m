@@ -1,7 +1,7 @@
 function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 % Written By: RoundStarling20
 %    Created: February 18 2022
-%   Modified: March 03 2022
+%   Modified: March 04 2022
 %
 %
 %  Function Description:  
@@ -63,7 +63,7 @@ for i = 3:inputLength
         %checks if the only the first column is zero 
         if(sum(double(values(i-1,2:end)) ~= 0) > 0)
                 values(i-1,1) = e;
-        %checks for row of zeros
+        %row of zeros has occurred
         else
             values(i-1,:) = getAuxiliaryPoly(values(i-2,:), ... 
                 inputLength,columnLength,i-1);
