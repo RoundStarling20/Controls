@@ -60,13 +60,13 @@ values(2,1:(inputLength - columnLength)) = coefficients(2:2:end);
 %% compute table
 for i = 3:inputLength
     if(values(i-1,1) == 0)
-        %checks if the only the first column is zero 
-        if(sum(double(values(i-1,2:end)) ~= 0) > 0)
-                values(i-1,1) = e;
-        %row of zeros has occurred
-        else
+        %check if row of zeros has occurred
+        if (values(i-1,2:end) == 0)
             values(i-1,:) = getAuxiliaryPoly(values(i-2,:), ... 
-                inputLength,columnLength,i-1);
+                inputLength,columnLength,i-1);           
+        %if not row of zeros, then first column must be a zero
+        else
+            values(i-1,1) = e;
         end
     end
     %compute index
