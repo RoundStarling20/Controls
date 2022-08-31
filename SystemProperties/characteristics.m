@@ -1,7 +1,7 @@
 function [wn,zeta,Ts,Tp,Tr,Os,wd] = characteristics(coefficients)
 % Written By: RoundStarling20
 %    Created: Febuary 07 2022
-%   Modified: Febuary 09 2022
+%   Modified: August 31 2022
 %
 %
 %  Function Description:  
@@ -60,7 +60,7 @@ function [wn,zeta,Ts,Tp,Tr,Os,wd] = characteristics(coefficients)
 %     3.7081
 
 if length(coefficients) > 3 || length(coefficients) < 3
-    error(message('Input should be of length 3'))
+    error('Input should be of length 3')
 else
     wn = sqrt(coefficients(1,3));
     zeta = coefficients(1,2) /(2*wn);
