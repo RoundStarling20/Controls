@@ -89,16 +89,11 @@ end
 if nargout == 2
     numberOfRHPPoles = [];
     if isSymType(sym(coefficients),'number') == 1
-        signOfFirstColumn = sign(values(:,1));
-        if(sum((abs(signOfFirstColumn) == 1)) == inputLength)
-            numberOfRHPPoles = 0;
-        else
-            columnToBeEvaluated = double(values(:,1)');
-            columnToBeEvaluated(columnToBeEvaluated == 0) = -1;
-            positive = columnToBeEvaluated > 0;
-            %xor of the shifted matricies will be the changes in sign
-            numberOfRHPPoles = sum(xor(positive(1:end-1),positive(2:end)));
-        end
+        columnToBeEvaluated = double(values(:,1)');
+        columnToBeEvaluated(columnToBeEvaluated == 0) = -1;
+        positive = columnToBeEvaluated > 0;
+        %xor of the shifted matricies will be the changes in sign
+        numberOfRHPPoles = sum(xor(positive(1:end-1),positive(2:end)));
     else
         warning(['The system''s stability can''t ' ...
             'be evaluated with symbolic variables.']);
