@@ -1,7 +1,7 @@
 function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 % Written By: RoundStarling20
 %    Created: February 18 2022
-%   Modified: March 04 2022
+%   Modified: September 18 2022
 %
 %
 %  Function Description:  
@@ -12,9 +12,9 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 %  coefficients:    Coefficients of a function (symbolic or numeric)
 %
 % OUTPUTS:
-%             values:          A symbolic matrix with the tables values,
+%             values:          A symbolic matrix with the values of the table,
 %                              limit is taken from the left
-%  numberOfRHPPoles:           The number of poles in the right half plane.
+%  numberOfRHPPoles:           The number of poles in the right half-plane.
 %
 %
 % Example Code:
@@ -39,15 +39,14 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 
 %% Initial Input Check
 if nargin < 1 || size(coefficients,1) > 1
-    error(['Input an 1-D array of polynomial coefficients entering '...
+    error(['Input a 1-D vector of polynomial coefficients entering '...
         'zeros where necessary.']);
 end
 
 %% Constants
 syms e
 inputLength = length(coefficients);
-halfInputLength = inputLength/2;
-columnLength = ceil(halfInputLength);
+columnLength = ceil(inputLength/2);
 values = sym(zeros(inputLength,columnLength));
 arbMatrix = sym(zeros(2));
 
