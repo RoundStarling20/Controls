@@ -9,11 +9,13 @@ function [values,numberOfRHPPoles] = routhHurwitz(coefficients)
 %          and inform the user of system stability.
 %
 % INPUTS:
-%  coefficients:    Coefficients of a function (symbolic or numeric)
+%  coefficients:    Coefficients of a function (symbolic or numeric),
+%                   usually the charecteristic equation of a 
+%                   transfer function.
 %
 % OUTPUTS:
-%             values:          A symbolic matrix with the values of the table,
-%                              limit is taken from the left
+%             values:          A symbolic matrix with the values of the
+%                              table, limit is taken from the left
 %  numberOfRHPPoles:           The number of poles in the right half-plane.
 %
 %
@@ -100,3 +102,34 @@ if nargout == 2
     end
 end
 end
+
+function [row] = getAuxiliaryPoly(values,inputLength,columnLength,i)
+% Written By: RoundStarling20
+%    Created: February 27 2022
+%   Modified: March 03 2022
+%
+%
+%  Function Description:  
+%      The purpose of this program is to create an auxiliary polynomial for
+%      the routhHurwitz function 
+%
+% INPUTS:
+%        values:    table that has been computed by routhHurwitz
+%   inputLength:    number of coefficients
+%  columnLength:    number of columns
+%             i:    row of zeros index
+%
+% OUTPUTS:
+%  row:    Auxiliary polynomial derivative coefficients
+%
+%
+
+power = inputLength - i + 1;
+exponents = power:-2:0;
+if length(exponents) > columnLength
+    exponents(columnLength+1:end) = [];
+else
+    exponents(end+1:columnLength) = 0;
+end
+row = exponents.* values;
+end 
